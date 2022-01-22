@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace linear_parallel
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //diziyi tanımlıyoruz.
+            int[] A = new int[100000000];
+            //diziyi dolduruyoruz.
+            for (int i = 0; i < A.Length; i++)
+            {
+                A[i] = i;
+            }
+
+            //aranan eleman
+            int find = 12500001;
+
+            //dizi kaç parçaya bölünecek
+            int divide = 8;
+
+            //dizinin bölünmüş her parçasının uzunluğu
+            int everyPiecesLength = A.Length / divide;
+
+            //paralel çalışmayı başlat.
+            for (int i = 0; i < divide; i++)
+            {
+                //önce aramaParametleri diye class oluştur sonra bu classı kullanarak dinamikleştir.
+                //aramaParametleri classını ap diye bir obje oluşturarak kullanmış oluyorum.
+                aramaParametleri ap = new aramaParametleri();
+                //classın içindeki dizi yukarıda tanımlı dizi
+                ap.array = A;
+                //classın içindeki aranan yukarıda tanımlı aranan
+                ap.find = find;
+                //classın içindeki startIndex
+                ap.startIndex = i * everyPiecesLength;
+                ap.endIndex = ap.startIndex + everyPiecesLength;
+                ap.taskID = i;
+
+                //paralel görevi başlatıyorum.
+                Task task = new Task(obj => LineerArama((aramaParametleri)obj), ap);
+                task.Start();
+            }
+            //program çalıştırıldığında hemen çıkış yapmaması için
+            Console.ReadLine();
+        }
+
+        //Lineer aramanın gerçekleştiği fonksiyon
+        static int LineerArama(aramaParametleri ap)
+        {
+            //aramaParametrelerinden gelen bitiş indexine kadar
+            for (int i = ap.startIndex; i < ap.endIndex; i++)
+            {
+                if (ap.find == ap.array[i])
+                {
+                    Console.WriteLine("Aranan numara {0}. Taskta, ve {1} indexinde bulundu", i, ap.taskID);
+                    return i;
+                }
+            }
+
+            //eğer aranan bulunamadıysa
+            Console.WriteLine("aranan numara {0} taskta bulunamadı", ap.taskID);
+            return -1;
+        }
+
+        public class aramaParametleri
+        {
+            public int[] array;
+            public int startIndex;
+            public int endIndex;
+            public int find;
+            public int taskID;
+        }
+    }
+}
