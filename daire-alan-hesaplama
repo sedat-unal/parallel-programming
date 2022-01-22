@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bubblesort_parallel
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double alan = DaireAlan(2.5);
+            Console.WriteLine(alan);
+            Console.Read();
+        }
+
+        public static double DaireAlan(double yaricap)
+        {
+            return 3.14 * yaricap * yaricap;
+        }
+    }
+}
