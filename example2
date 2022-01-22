@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace bubblesort_parallel
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double s1 = Sigmoid(0, 1);
+            double s2 = Sigmoid(1, 1);
+            double s3 = Sigmoid(-1, 1);
+            double s4 = Sigmoid(-100, 1);
+            double s5 = Sigmoid(8000, 1);
+
+            Console.WriteLine("s1 = {0},\ns2 = {1},\ns3 = {2},\ns4 = {3},\ns5 = {4},\n", s1, s2, s3, s4, s5);
+            Console.Read();
+        }
+
+        public static double Sigmoid(double x, double a)
+        {
+            return 1 / (1 + Math.Exp(-a * x));
+        }
+    }
+}
