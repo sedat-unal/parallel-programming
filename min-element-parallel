@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] A = new int[20];
+            //Random rastgele = new Random();
+            for (int i = 0; i < A.Length; i++)
+            {
+                //A[i] = rastgele.Next(1, 20);
+                A[i] = i;
+            }
+
+            int maksimum = int.MaxValue;
+            int divide = 2;
+            int everyPiecesLength = A.Length / divide;
+
+            for (int i = 0; i < divide; i++)
+            {
+                maksimumuBul mb = new maksimumuBul();
+                mb.array = A;
+                mb.maksimum = maksimum;
+                mb.startIndex = i * everyPiecesLength;
+                mb.endIndex = mb.startIndex + everyPiecesLength;
+                mb.taskID = i;
+
+                Task task = new Task(obj => maksimumFunc((maksimumuBul)obj), mb);
+                task.Start();
+            }
+            Console.Read();
+        }
+
+        static int maksimumFunc(maksimumuBul mb)
+        {
+            for (int i = mb.startIndex; i < mb.endIndex; i++)
+            {
+                if (mb.array[i] < mb.maksimum)
+                {
+                    mb.maksimum = mb.array[i];
+                }
+            }
+            Console.WriteLine("taskID : {0}, maks : {1}", mb.taskID, mb.maksimum);
+            return mb.maksimum;
+        }
+
+        public class maksimumuBul
+        {
+            public int[] array;
+            public int maksimum;
+            public int startIndex;
+            public int endIndex;
+            public int taskID;
+        }
+    }
+}
