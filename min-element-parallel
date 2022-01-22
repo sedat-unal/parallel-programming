@@ -18,7 +18,7 @@ namespace ConsoleApp3
                 A[i] = i;
             }
 
-            int maksimum = int.MaxValue;
+            int minimum = int.MaxValue;
             int divide = 2;
             int everyPiecesLength = A.Length / divide;
 
@@ -26,7 +26,7 @@ namespace ConsoleApp3
             {
                 maksimumuBul mb = new maksimumuBul();
                 mb.array = A;
-                mb.maksimum = maksimum;
+                mb.minimum = minimum;
                 mb.startIndex = i * everyPiecesLength;
                 mb.endIndex = mb.startIndex + everyPiecesLength;
                 mb.taskID = i;
@@ -41,19 +41,19 @@ namespace ConsoleApp3
         {
             for (int i = mb.startIndex; i < mb.endIndex; i++)
             {
-                if (mb.array[i] < mb.maksimum)
+                if (mb.array[i] < mb.minimum)
                 {
-                    mb.maksimum = mb.array[i];
+                    mb.minimum = mb.array[i];
                 }
             }
-            Console.WriteLine("taskID : {0}, maks : {1}", mb.taskID, mb.maksimum);
-            return mb.maksimum;
+            Console.WriteLine("taskID : {0}, maks : {1}", mb.taskID, mb.minimum);
+            return mb.minimum;
         }
 
         public class maksimumuBul
         {
             public int[] array;
-            public int maksimum;
+            public int minimum;
             public int startIndex;
             public int endIndex;
             public int taskID;
